@@ -11,7 +11,11 @@ class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDat
     }
 
     override suspend fun getTasks(): Result<List<Task>> {
-        TODO("Not yet implemented")
+        tasks?.let {return Result.Success(ArrayList(it)) }
+        return Result.Error(
+                Exception("Tasks not found")
+        )
+
     }
 
     override suspend fun saveTask(task: Task) {
