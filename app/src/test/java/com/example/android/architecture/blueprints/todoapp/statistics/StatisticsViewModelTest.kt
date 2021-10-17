@@ -53,4 +53,15 @@ class StatisticsViewModelTest {
         // Then assert that the progress indicator is hidden
         assertThat(statisticsViewModel.dataLoading.getOrAwaitValue(), `is`(false))
     }
+
+    @Test
+    fun loadStatisticsWhenTaskAreUnavailable_callErrorToDisplay() {
+        // Make the repository return errors
+        taskRepository.setReturnError(true)
+        statisticsViewModel.refresh()
+
+        // Then empty and error are true (which triggers and error message to be shown)
+        assertThat(statisticsViewModel.empty.getOrAwaitValue(), `is`(true))
+        assertThat(statisticsViewModel.error.getOrAwaitValue(), `is`(true))
+    }
 }
